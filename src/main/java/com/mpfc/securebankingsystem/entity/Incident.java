@@ -12,15 +12,14 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "audit_logs")
-public class AuditLog {
+@Table(name = "incidents")
+public class Incident {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String username;
-    private String action;
+    private String username; // may be unknown
+    private String eventType;
     private Instant timestamp;
-    private String referenceId; // file id or entity ref
     @Column(length = 2000)
     private String details;
+    private boolean acknowledged = false;
 }

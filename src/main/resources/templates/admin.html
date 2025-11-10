@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+<header class="header dark">
+  <h1>Admin Dashboard</h1>
+  <form th:action="@{/logout}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" class="btn">Logout</button>
+  </form>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h3>Encrypted Files</h3>
+    <table class="table">
+      <tr><th>ID</th><th>Name</th><th>Uploader</th><th>Uploaded</th><th>Algo</th><th></th></tr>
+      <tr th:each="f : ${filesPage.content}">
+        <td th:text="${f.id}"></td>
+        <td th:text="${f.fileName}"></td>
+        <td th:text="${f.uploader}"></td>
+        <td th:text="${f.uploadedAt}"></td>
+        <td th:text="${f.encryptionAlgo}"></td>
+        <td><a class="btn" th:href="@{|/admin/files/${f.id}/decrypt|}">Decrypt</a></td>
+      </tr>
+      <tr th:if="${filesPage.content.empty}">
+        <td colspan="6">No files.</td>
+      </tr>
+    </table>
+    <div class="pagination" th:if="${filesPage.totalPages > 1}">
+      <a th:if="${!filesPage.first}" th:href="@{|/admin?fpage=${filesPage.number-1}&apage=${apage}&ipage=${ipage}|}">&laquo; Prev</a>
+      <span th:each="i : ${#numbers.sequence(0, filesPage.totalPages-1)}"
+            th:classappend="${i == filesPage.number} ? 'active'">
+        <a th:if="${i != filesPage.number}" th:href="@{|/admin?fpage=${i}&apage=${apage}&ipage=${ipage}|}" th:text="${i+1}"></a>
+        <span th:if="${i == filesPage.number}" th:text="${i+1}"></span>
+      </span>
+      <a th:if="${!filesPage.last}" th:href="@{|/admin?fpage=${filesPage.number+1}&apage=${apage}&ipage=${ipage}|}">Next &raquo;</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Audit Logs</h3>
+    <table class="table">
+      <tr><th>Time</th><th>User</th><th>Action</th><th>Ref</th><th>Details</th></tr>
+      <tr th:each="a : ${auditsPage.content}">
+        <td th:text="${a.timestamp}"></td>
+        <td th:text="${a.username}"></td>
+        <td th:text="${a.action}"></td>
+        <td th:text="${a.referenceId}"></td>
+        <td th:text="${a.details}"></td>
+      </tr>
+      <tr th:if="${auditsPage.content.empty}">
+        <td colspan="5">No audit entries.</td>
+      </tr>
+    </table>
+    <div class="pagination" th:if="${auditsPage.totalPages > 1}">
+      <a th:if="${!auditsPage.first}" th:href="@{|/admin?apage=${auditsPage.number-1}&fpage=${fpage}&ipage=${ipage}|}">&laquo; Prev</a>
+      <span th:each="i : ${#numbers.sequence(0, auditsPage.totalPages-1)}"
+            th:classappend="${i == auditsPage.number} ? 'active'">
+        <a th:if="${i != auditsPage.number}" th:href="@{|/admin?apage=${i}&fpage=${fpage}&ipage=${ipage}|}" th:text="${i+1}"></a>
+        <span th:if="${i == auditsPage.number}" th:text="${i+1}"></span>
+      </span>
+      <a th:if="${!auditsPage.last}" th:href="@{|/admin?apage=${auditsPage.number+1}&fpage=${fpage}&ipage=${ipage}|}">Next &raquo;</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Incidents</h3>
+    <table class="table">
+      <tr><th>Time</th><th>User</th><th>Type</th><th>Details</th><th>Status</th><th></th></tr>
+      <tr th:each="i : ${incidentsPage.content}">
+        <td th:text="${i.timestamp}"></td>
+        <td th:text="${i.username}"></td>
+        <td th:text="${i.eventType}"></td>
+        <td th:text="${i.details}"></td>
+        <td th:text="${i.acknowledged} ? 'ACK' : 'NEW'"></td>
+        <td>
+          <form th:if="${!i.acknowledged}" th:action="@{|/admin/incidents/${i.id}/ack?fpage=${fpage}&apage=${apage}&ipage=${ipage}|}" method="post" class="inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit" class="btn">Acknowledge</button>
+          </form>
+        </td>
+      </tr>
+      <tr th:if="${incidentsPage.content.empty}">
+        <td colspan="6">No incidents.</td>
+      </tr>
+    </table>
+    <div class="pagination" th:if="${incidentsPage.totalPages > 1}">
+      <a th:if="${!incidentsPage.first}" th:href="@{|/admin?ipage=${incidentsPage.number-1}&fpage=${fpage}&apage=${apage}|}">&laquo; Prev</a>
+      <span th:each="i2 : ${#numbers.sequence(0, incidentsPage.totalPages-1)}"
+            th:classappend="${i2 == incidentsPage.number} ? 'active'">
+        <a th:if="${i2 != incidentsPage.number}" th:href="@{|/admin?ipage=${i2}&fpage=${fpage}&apage=${apage}|}" th:text="${i2+1}"></a>
+        <span th:if="${i2 == incidentsPage.number}" th:text="${i2+1}"></span>
+      </span>
+      <a th:if="${!incidentsPage.last}" th:href="@{|/admin?ipage=${incidentsPage.number+1}&fpage=${fpage}&apage=${apage}|}">Next &raquo;</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

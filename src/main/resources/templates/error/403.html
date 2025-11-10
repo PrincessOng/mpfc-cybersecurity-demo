@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Access Denied</title>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+<div class="box">
+  <h2>403 - Forbidden</h2>
+  <p>You are not authorized to access this resource.</p>
+  <div>
+    <a class="btn" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin}">Admin Home</a>
+    <a class="btn" th:if="${#authorization.expression('hasRole(''RECORDS_OFFICER'')')}" th:href="@{/upload}">Records Home</a>
+    <a class="btn" th:if="${#authorization.expression('isAnonymous()')}" th:href="@{/login}">Login</a>
+  </div>
+</div>
+</body>
+</html>

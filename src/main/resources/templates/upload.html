@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Records Officer</title>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+<header class="header dark">
+  <h1>Records Officer</h1>
+  <form th:action="@{/logout}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" class="btn">Logout</button>
+  </form>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h2>Upload Member Data</h2>
+    <div th:if="${success}" th:text="${success}" class="msg msg-ok"></div>
+    <div th:if="${error}" th:text="${error}" class="msg msg-err"></div>
+    <form class="form-row" th:action="@{/upload(page=${currentPage})}" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      <input type="file" name="file" accept=".csv,.xls,.xlsx"/>
+      <button type="submit" class="btn">Upload & Encrypt</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Encrypted Upload History</h3>
+    <table class="table">
+      <tr><th>ID</th><th>Name</th><th>Uploaded</th><th>Checksum</th></tr>
+      <tr th:each="f : ${filesPage.content}">
+        <td th:text="${f.id}"></td>
+        <td th:text="${f.fileName}"></td>
+        <td th:text="${f.uploadedAt}"></td>
+        <td th:text="${f.checksumSha256}"></td>
+      </tr>
+      <tr th:if="${filesPage.content.empty}">
+        <td colspan="4">No files.</td>
+      </tr>
+    </table>
+    <div class="pagination" th:if="${filesPage.totalPages > 1}">
+      <a th:if="${!filesPage.first}" th:href="@{|/upload?page=${filesPage.number-1}|}">&laquo; Prev</a>
+      <span th:each="i : ${#numbers.sequence(0, filesPage.totalPages-1)}"
+            th:classappend="${i == filesPage.number} ? 'active'">
+        <a th:if="${i != filesPage.number}" th:href="@{|/upload?page=${i}|}" th:text="${i+1}"></a>
+        <span th:if="${i == filesPage.number}" th:text="${i+1}"></span>
+      </span>
+      <a th:if="${!filesPage.last}" th:href="@{|/upload?page=${filesPage.number+1}|}">Next &raquo;</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

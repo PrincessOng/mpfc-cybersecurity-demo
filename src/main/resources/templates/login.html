@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body class="gradient-bg">
+<div class="box">
+  <h2 class="login-title">Secure Login</h2>
+  <div th:if="${param.error}" class="msg msg-err">Invalid credentials.</div>
+  <div th:if="${param.logout}" class="msg msg-ok">Logged out.</div>
+  <div th:if="${param.locked}" class="msg msg-warn">Account locked for up to 2 minutes.</div>
+  <form th:action="@{/login}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <label>Username</label>
+    <input class="full-width" type="text" name="username" autofocus/>
+    <label>Password</label>
+    <input class="full-width" type="password" name="password"/>
+    <button type="submit" class="btn full-width" style="margin-top:12px;">Sign In</button>
+  </form>
+  <div class="login-extra">Authorized users only. Activity is logged.</div>
+</div>
+</body>
+</html>

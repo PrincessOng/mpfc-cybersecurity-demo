@@ -1,0 +1,4 @@
+Name,Email,Remarks
+Test User 1,user1@example.com,Invalid file format
+Test User 2,user2@example.com,Missing required columns
+Test User 3,user3@example.com,Wrong structure for upload

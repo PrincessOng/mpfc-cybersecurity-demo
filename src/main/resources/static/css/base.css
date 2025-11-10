@@ -1,0 +1,51 @@
+:root {
+  --primary:#1976d2; --primary-hover:#125a9c;
+  --bg:#f4f6f8; --panel:#fff; --border:#d0d6dc;
+  --text:#263238; --muted:#455a64;
+  --ok:#2e7d32; --err:#b30000; --warn:#b35a00;
+  font-family: Arial, Helvetica, sans-serif;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); margin: 0; }
+
+.header { color:#fff; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
+.header.dark { background:#263238; }
+.header.blue { background:#263238; } /* unify officer to same dark color */
+.header h1 { margin:0; font-size:18px; font-weight:600; }
+
+.wrap { max-width:1180px; margin:24px auto 60px; padding:0 16px; }
+.container, .card, .panel, .box { background:var(--panel); border:1px solid var(--border); border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+.card { padding:16px 18px 10px; margin-bottom:22px; }
+.panel { padding:20px; }
+.box { max-width:420px; margin:80px auto; padding:28px; }
+
+h1,h2,h3 { margin:0 0 14px; }
+h2 { font-size:20px; }
+h3 { font-size:15px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); }
+
+.btn, button.btn { background:var(--primary); color:#fff; padding:8px 12px; border:none; border-radius:4px; cursor:pointer; font-size:13px; text-decoration:none; display:inline-block; }
+.btn:hover, button.btn:hover { background:var(--primary-hover); }
+
+.table { width:100%; border-collapse: collapse; font-size:13px; }
+.table th, .table td { padding:6px 8px; border-bottom:1px solid #e2e6ea; text-align:left; }
+.table th { background:#f0f3f5; font-weight:600; }
+.table tr:last-child td { border-bottom:none; }
+
+.msg { font-size:13px; margin:8px 0; }
+.msg-ok { color:var(--ok); }
+.msg-err { color:var(--err); }
+.msg-warn { color:var(--warn); }
+
+.form-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+input[type=file], input[type=text], input[type=password] { font-size:13px; padding:10px; border:1px solid #c2c8ce; border-radius:4px; }
+.full-width { width:100%; }
+
+.login-title { font-weight:600; margin-bottom:12px; }
+/* Login enhancements */
+.login-extra { font-size:12px; color:var(--muted); margin-top:10px; text-align:center; }
+.gradient-bg { background:linear-gradient(135deg,#eceff1 0%,#f4f6f8 60%); }
+/* Pagination */
+.pagination { margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }
+.pagination a, .pagination span { padding:4px 8px; border:1px solid var(--border); border-radius:4px; font-size:12px; text-decoration:none; color:var(--text); background:#fff; }
+.pagination a:hover { background:#f0f3f5; }
+.pagination .active { background:var(--primary); color:#fff; border-color:var(--primary); }

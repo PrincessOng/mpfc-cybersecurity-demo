@@ -1,0 +1,6 @@
+MemberID,FullName,Address,AccountNumber,Balance,LastTransactionDate
+MPFC-001,Maria Santos,"Zone 1, Cagayan de Oro City",1234567890,15000.75,2025-10-05
+MPFC-002,Juan Dela Cruz,"Zone 2, Cagayan de Oro City",9876543210,23200.50,2025-10-12
+MPFC-003,Ana Reyes,"Zone 3, Cagayan de Oro City",1122334455,9850.00,2025-10-21
+MPFC-004,Carlos Garcia,"Zone 4, Cagayan de Oro City",9988776655,17890.25,2025-10-30
+MPFC-005,Lucia Fernandez,"Zone 5, Cagayan de Oro City",5566778899,12000.00,2025-11-02
